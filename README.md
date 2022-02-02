@@ -1,6 +1,6 @@
 ### Ensemble Kalman Filter Tutorial
 
-[Yan Zhan](https://orcid.org/0000-0002-2623-3238) and [Patricia M Gregg](https://orcid.org/0000-0003-4081-1302)
+*[Yan Zhan](https://orcid.org/0000-0002-2623-3238) and [Patricia M Gregg](https://orcid.org/0000-0003-4081-1302)*
 
 The Ensemble Kalman Filter Tutorial is a Python-based Jupyter Notebook, which has been orginally designed for [CIDER 2019 Workshop](https://www.deep-earth.org/summer19). It presents a data assimilation framework using the Ensemble Kalman Filter (EnKF) approach to combine geodetic data with geodynamic models to investigate volcanic unrest. Although the code is based on examples in volcanic deformation, the code can be easily applied to other disciplines. Click [here](https://nbviewer.jupyter.org/github/geoyanzhan3/EnKF_tutorial/blob/master/ZhanGregg_EnKFTutorial_Frontiers2019.ipynb) to preview the tutorial.
 
