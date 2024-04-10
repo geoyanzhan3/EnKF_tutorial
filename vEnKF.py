@@ -352,3 +352,52 @@ def yangint(x, y, z, z0, theta, a1, b1, a, b, csi, mu, nu, Pdila):
     U3 = Ustar3 + Udila3  # local z component
 
     return U1, U2, U3
+
+# create surface x, y, z for an ellipsoid with three semiaxises
+# a, b, c at the location (x0, y0, z0), the dip and direction of
+# the c axis is theta and phi
+def ellipsoid(x0, y0, z0,
+              a, b, c,
+              theta, phi
+              ):
+    # parameters u and v
+    u = np.linspace(0, 2 * np.pi, 100)
+    v = np.linspace(0, np.pi, 100)
+    # ellipsoid equations
+    x = a * np.outer(np.cos(u), np.sin(v))
+    y = b * np.outer(np.sin(u), np.sin(v))
+    z = c * np.outer(np.ones(np.size(u)), np.cos(v))
+
+    # rotation matrix
+    m1 = makehgtform([-1, 0, 0], np.pi / 2 - theta)
+    m2 = makehgtform([0, 0, 1], phi)
+
+    # prepare for rotations
+    xx = x.reshape(-1)
+    yy = y.reshape(-1)
+    zz = z.reshape(-1)
+    # [m * 3] array
+    xyz_old = nans([3, len(xx)])
+    xyz_old[0, :] = xx
+    xyz_old[1, :] = yy
+    xyz_old[2, :] = zz
+    xyz_old = xyz_old.T
+    # rotate x axis
+    xyz_new1 = xyz_old @ m1[0:3, 0:3]
+    # rotate z axis
+    xyz_new2 = xyz_new1 @ m2[0:3, 0:3]
+    # 3 1D array
+    xx = xyz_new2[:, 0]
+    yy = xyz_new2[:, 1]
+    zz = xyz_new2[:, 2]
+    # reshape to 3 2D matrix
+    x = xx.reshape(x.shape)
+    y = yy.reshape(y.shape)
+    z = zz.reshape(z.shape)
+
+    # translation
+    x = x + x0
+    y = y + y0
+    z = z + z0
+
+    return x, y, z
